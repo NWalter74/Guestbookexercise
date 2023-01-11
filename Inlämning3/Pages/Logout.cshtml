@@ -1,0 +1,20 @@
+﻿@page
+@model Inlämning3.Pages.LogoutModel
+@{
+}
+
+<form method="post">
+    <div class="container mt-5">
+        <div class="row justify-content-center align-items-center">
+            <div class="col-sm-12 col-me-12 col-lg-4">
+                <p>Är du säkert att du vill logga ut?</p>
+                <p>
+                    <button class="btn btn-primary" asp-page-handler="Logout">Ja</button>
+                    <button class="btn btn-light ml-5 border-dark" asp-page-handler="DontLogout">Nej</button>
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+</form>

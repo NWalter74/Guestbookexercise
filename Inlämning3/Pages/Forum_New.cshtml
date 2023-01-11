@@ -1,0 +1,54 @@
+﻿@page
+@model Inlämning3.Pages.Forum_NewModel
+@{
+}
+
+<div class="container text-center" style="margin-bottom:0">
+    <br />
+    <h1 class="display-4">Skapa ny tråd</h1>
+    <br />
+</div>
+
+<form method="post" action="">
+    Rubrik: <br />
+    <input type="text" name="rubrik" value="" /> <br />
+    Inlägg: <br />
+    <input type="text" name="inlägg" value="" /> <br />
+    <input type="submit" value="Publicera" class="btn-primary" /> <br />
+</form>
+
+@{
+    if (ViewContext.HttpContext.Request.Method == "POST")
+    {
+        var rubrik = Request.Form["rubrik"];
+        var inlägg = Request.Form["inlägg"];
+        DBHandler.writeDBForum(rubrik, inlägg);
+    }
+}
+
+<table class="table">
+    @{
+        ViewData["Title"] = "Forum";
+
+        string tablename = "forum";
+        string mysql = "SELECT * FROM webbserver." + tablename + ";";
+
+        var dbContent = DBHandler.readDB(mysql).Result;
+        var rows = dbContent.Split("\n");
+        for (var i = 0; i < rows.Length - 1; i++)
+        {
+            var cells = rows[i].Split("\t");
+            <tr>
+                <td>
+                    @cells[0]
+                </td>
+                <td>
+                    @cells[1]
+                </td>
+                <td>
+                    @cells[2]
+                </td>
+            </tr>
+        }
+    }
+</table>

@@ -1,0 +1,51 @@
+﻿@page
+@model Inlämning3.Pages.PostList.CreateModel
+
+<br />
+<h2 class="text-info">Skapa ny tråd</h2>
+<br />
+
+<div class="border container" style="padding:30px;">
+    <form method="post">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Book.Namn"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Book.Namn" class="form-control" />
+            </div>
+            <span asp-validation-for="Book.Namn" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Book.Rubrik"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Book.Rubrik" class="form-control" />
+            </div>
+            <span asp-validation-for="Book.Rubrik" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-3">
+                <label asp-for="Book.Inlägg"></label>
+            </div>
+            <div class="col-6">
+                <input asp-for="Book.Inlägg" class="form-control" />
+            </div>
+            <span asp-validation-for="Book.Inlägg" class="text-danger"></span>
+        </div>
+        <div class="form-group row">
+            <div class="col-3 offset-3">
+                <input type="submit" value="Create" class="btn btn-primary form-control" />
+            </div>
+            <div class="col-3">
+                <a asp-page="PostIndex" class="btn btn-success form-control">Tillbaka till trådlistan</a>
+            </div>
+        </div>
+    </form>
+</div>
+
+@section Scripts{ 
+    <partial name="_ValidationScriptsPartial" />
+}

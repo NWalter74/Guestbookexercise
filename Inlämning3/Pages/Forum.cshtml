@@ -1,0 +1,82 @@
+﻿@page
+@model Inlämning3.Pages.ForumModel
+@{
+}
+
+<div class="container text-center" style="margin-bottom:0">
+    <br />
+    <h1 class="display-4">Välkommen till mitt forum</h1>
+    <br />
+</div>
+
+<div class="container mt-5">
+    <div class="row ">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h3 class="mb-3">Ny tråd</h3>
+            <form method="post" action="">
+                <input type="hidden" name="id"/>
+                Rubrik: <br />
+                <input type="text" name="rubrik" value="" /> <br />
+                Inlägg: <br />
+                <label for="multiLineInput">
+                    <textarea rows="5" cols="50"></textarea>
+                </label>
+                <input type="submit" value="Publicera" class="btn-primary" asp-page="Posts" /> <br />
+            </form>
+        </div>
+    </div>
+</div>
+<br />
+@{
+    if (ViewContext.HttpContext.Request.Method == "POST")
+    {
+        var rubrik = Request.Form["rubrik"];
+        var inlägg = Request.Form["inlägg"];
+        DBHandler.writeDBForum(rubrik, inlägg);
+    }
+}
+
+<table class="table">
+    <tr>
+        <th>Id</th>
+        <th>Rubrik</th>
+        <th>Inlägg</th>
+    </tr>
+
+    @{
+        ViewData["Title"] = "Forum";
+
+        string tablename = "forum";
+        string mysql = "SELECT * FROM webbserver." + tablename + ";";
+
+        var dbContent = DBHandler.readDB(mysql).Result;
+        var rows = dbContent.Split("\n");
+        for (var i = 0; i < rows.Length - 1; i++)
+        {
+            var cells = rows[i].Split("\t");
+
+            <tr>
+                <td>
+                    @cells[0]
+                </td>
+                <td class="co">
+                    @cells[1]
+                </td>
+                <td style="visibility:collapse">
+                    @cells[2]
+                </td>
+                <td>
+                    <div class="btn-group btn-group-sm mr-1" role="group">
+                        <a class="btn btn-outline-success btn-sm mr-1" asp-area="" asp-page="Index">Läsa</a><br />
+                        <a class="btn btn-outline-primary btn-sm mr-1" asp-area="" asp-page="WriteAnswerToPost">Svara</a><br />
+                        <a class="btn btn-outline-danger btn-sm mr-1"  asp-area="" asp-page="Index">Radera</a><br />
+                    </div>
+                    <br />
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+
+

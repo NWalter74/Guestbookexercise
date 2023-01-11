@@ -1,0 +1,27 @@
+﻿@page
+@model Inlämning3.Pages.WriteAnswerToPostModel
+@{
+}
+
+<div class="container text-center" style="margin-bottom:0">
+    <br />
+    <h1 class="display-4">Svara på inlägget här</h1>
+    <br />
+</div>
+
+<div class="container mt-5">
+    <div class="row ">
+        <div class="col-sm-12 col-md-12 col-lg-4">
+            <h3 class="mb-3">Svara på inlägget</h3>
+            <form method="post" action="">
+                <label asp-for="User"></label>
+                Svar: <br />
+                <label for="multiLineInput">
+                    <textarea rows="5" cols="50" id="multiLineInput"></textarea>
+                </label>
+                <input type="submit" value="Publicera" class="btn-primary" asp-page="Posts" /> <br />
+            </form>
+        </div>
+    </div>
+</div>
+<br />

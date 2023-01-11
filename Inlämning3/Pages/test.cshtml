@@ -1,0 +1,75 @@
+﻿@page
+@model Inlämning3.Pages.testModel
+@{
+}
+
+<div class="container text-center" style="margin-bottom:0">
+    <br />
+    <h1 class="display-4">Välkommen till mitt forum</h1>
+    <br />
+</div>
+
+<form method="post" action="">
+    Rubrik: <br />
+    <input type="text" name="rubrik" value="" /> <br />
+    Inlägg: <br />
+    <input type="text" name="inlägg" value="" /> <br />
+    <input type="submit" value="Publicera" class="btn-primary" /> <br />
+</form>
+<br />
+
+    <tr class="result">
+        <th></th>
+        <th>Nr</th>
+        <th>Rubrik</th>
+        <th>Skapad av</th>
+        <th>Senaste inlägg</th>
+    </tr>
+    <tr class="result">
+        <td>
+            <form action='readtopic.php' method='post'>
+                <input type='hidden' name='email' value='holros'>
+                <input type='hidden' name='userpass' value='foo'>
+                <input type='hidden' name='presentation' value='Jag heter Holger'>
+                <input type='hidden' name='header' value='F&ouml;rsta tr&aring;den'>
+                <input type='hidden' name='topicid' value='0'>
+                <input type='hidden' name='updates' value='1'>
+                <input type='hidden' name='originator' value='holros'>
+                <input class='result' type='submit' name='submit' value='Läs'>
+            </form>
+        </td>
+        @{
+            if (ViewContext.HttpContext.Request.Method == "POST")
+            {
+                var rubrik = Request.Form["rubrik"];
+                var inlägg = Request.Form["inlägg"];
+                DBHandler.writeDBForum(rubrik, inlägg);
+            }
+        }
+
+        <table class="table">
+            @{
+                ViewData["Title"] = "Forum";
+
+                string tablename = "forum";
+                string mysql = "SELECT * FROM webbserver." + tablename + ";";
+
+                var dbContent = DBHandler.readDB(mysql).Result;
+                var rows = dbContent.Split("\n");
+                for (var i = 0; i < rows.Length - 1; i++)
+                {
+                    var cells = rows[i].Split("\t");
+                    <tr>
+                        <td>
+                            @cells[0]
+                        </td>
+                        <td>
+                            @cells[1]
+                        </td>
+                        <td>
+                            @cells[2]
+                        </td>
+                    </tr>
+                }
+            }
+        </table>

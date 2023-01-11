@@ -1,0 +1,72 @@
+﻿@page
+@model Inlämning3.Pages.GästbokModel
+@{
+}
+
+<div class="container text-center" style="margin-bottom:0">
+    <br />
+    <h1 class="display-4">Välkommen till min gästbok</h1>
+    <br />
+</div>
+
+<form method="post" action="">
+    Namn: <br />
+    <input type="text" name="namn" value="" /> <br />
+    Email: <br />
+    <input type="text" name="email" value="" /> <br />
+    Hemsida: <br />
+    <input type="text" name="hemsida" value="" /> <br />
+    Telefon: <br />
+    <input type="text" name="telefon" value="" /> <br />
+    Kommentar: <br />
+    <input type="text" name="kommentar" value="" /> <br /> <br />
+    <input type="submit" value="Submit" class="btn-primary" /> <br />
+</form>
+
+@{
+    if (ViewContext.HttpContext.Request.Method == "POST")
+    {
+        var namn = Request.Form["namn"];
+        var email = Request.Form["email"];
+        var hemsiida = Request.Form["hemsida"];
+        var telefon = Request.Form["telefon"];
+        var kommentar = Request.Form["kommentar"];
+        DBHandler.writeDB(namn, email, hemsiida, telefon, kommentar);
+    }
+}
+
+<table class="table">
+    @{
+        ViewData["Title"] = "Gästbok";
+
+        string tablename = "guestbook";
+        string mysql = "SELECT * FROM webbserver." + tablename + ";";
+
+        var dbContent = DBHandler.readDB(mysql).Result;
+        var rows = dbContent.Split("\n");
+        for (var i = 0; i < rows.Length - 1; i++)
+        {
+            var cells = rows[i].Split("\t");
+            <tr>
+                <td>
+                    @cells[0]
+                </td>
+                <td>
+                    @cells[1]
+                </td>
+                <td>
+                    @cells[2]
+                </td>
+                <td>
+                    @cells[3]
+                </td>
+                <td>
+                    @cells[4]
+                </td>
+                <td>
+                    @cells[5]
+                </td>
+            </tr>
+        }
+    }
+</table>

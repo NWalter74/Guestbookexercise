@@ -1,0 +1,59 @@
+﻿@page
+@model Inlämning3.Pages.PostList.IndexModel
+@{
+}
+
+<br />
+<div class="container row p-0 m-0">
+    <div class="col-9">
+        <h2 class="text-info">Tråd lista</h2>
+    </div>
+    <div class="col-3">
+        <a asp-page="Create" class="btn btn-info form-control text-white">Skapa ny tråd</a>
+    </div>
+
+    <div class="col-12 border p-3 mt-3">
+        <form  method="post">
+            <!--Same book som is passed from the handler on the PostIndex.cshtml.cs page-->
+            @if(Model.Books.Count() > 0)
+            {
+            <table class="table table-striped border">
+                <tr class="table-seconday">
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Namn"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Rubrik"></label>
+                    </th>
+                    <th>
+                        <label asp-for="Books.FirstOrDefault().Inlägg"></label>
+
+                    </th>
+                </tr>
+                @foreach (var item in Model.Books)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(m => item.Namn)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Rubrik)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(m => item.Inlägg)
+                    </td>
+                    <td>
+                        <button asp-page-handler="Delete" asp-route-id="@item.Id" onclick="return confirm('Är du säkert att du vill radera denna tråd?')" class="btn btn-danger btn-sm text-white" btn-sm>Radera</button>
+                        <a asp-page="Edit" asp-route-id="@item.Id" class="btn btn-success btn-sm text-white">Editera</a>
+                    </td>
+                </tr>
+                }
+            </table>
+            }
+            else
+            {
+            <p>Inga trådar finns.</p>
+            }
+        </form>
+    </div>
+</div>
